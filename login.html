@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="M.Steven | Freelance Developer | Official Biography website">
+    <meta name="keywords" content="M.Steven, Biography, Awesome websites">
+    <meta name="author" content="Steven MANIRAFASHA">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aimelive - Login Page </title>
+    <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+    <section class="header navbar">
+        <div>
+            <a href="index.html">
+                <table>
+                    <tr>
+                        <td><img src="images/Rectangle 21.png" id="logo" width="50px" /></td>
+                        <td><label id="logo_text">M.Steven</label></td>
+                    </tr>
+                </table>
+            </a>
+
+            <ul>
+                <li><a href="index.html">Home</a> </li>
+                <li><a href="blog.html">News</a> </li>
+                <li><a href="contact.html">Contacts</a> </li>
+                <li><a href="about.html">About</a> </li>
+                <li><a href="#" id="admin_login">login</a> </li>
+            </ul>
+            <a class="humberg" onclick="showNav()" id="humberg"><i class="fa fa-bars"></i></a>
+            <div class="mybodyhover" id="mybodyhover" onclick="closeNav()"></div>
+            <nav class="mobileNav" id="mobileNav">
+
+                <i style="font-size:24px" class="fa" id="closeNav"><span onclick="closeNav()">&#xf00d;</span></i>
+                <a href="#">Home</a>
+                <a href="#">News</a>
+                <a href="#">About</a>
+                <a href="#">Contacts</a>
+                <a href="#">Login</a>
+
+
+
+            </nav>
+        </div>
+    </section>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+
+    <center>
+        <div class="login">
+            <img src="images/Rectangle 21.png" id="logo" width="80px" />
+            <h2 id="animateHeading">Hey Admin, Welcome</h2>
+            <form method="post" class="login_form" name="loginAdmin">
+                <label id="errorEmail">E-mail  </label><br>
+                <input type="text" name="email" placeholder="Email or Phone number" class="input" id="adminEmail" />
+                <br>
+                <label id="errorPassword">Password </label><br>
+                <input type="password" name="password" placeholder="Enter Password" autocomplete="current-password" class="input" id="toggle-password" />
+                <br>
+                <label id="checkbox"><input type="checkbox" onclick="myFunction()"> &nbsp; Show Password</label>
+
+                <br>
+                <input type="submit" Value="Sign in" placeholder="Email or Phone number" class="input" id="signin" /><br>
+
+            </form>
+            <p>Don't have an Account? <a href="#"> Sign up now </a></p>
+        </div>
+    </center>
+
+    <script>
+        const form = document.querySelector('.login_form');
+        let emails = document.getElementById("errorEmail");
+        let passwords = document.getElementById("errorPassword");
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
+            authDomain: "aimelive-capstone.firebaseapp.com",
+            projectId: "aimelive-capstone",
+            storageBucket: "aimelive-capstone.appspot.com",
+            messagingSenderId: "319177014265",
+            appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+
+
+
+            if (formValidation()) {
+                firebase.auth().signInWithEmailAndPassword(form.email.value, form.password.value)
+                    .then((userCredential) => {
+                        swal("Welcome Admin", "You're successfully logged in, Click OK to continue!", "success").then(() => {
+                            //console.log("Logge¬ød in")
+                            //alert("Let's Go, Click OK to continue ")
+                            location.href = 'Admin/dashboard.html'
+                        })
+                    })
+                    .catch((error) => {
+                        swal("Oops!", "Wrong Email or Paswword! Contact Admin for help! ", "error").then(() => {
+                                form.reset();
+                                form.email.focus();
+                                emails.innerHTML = "E-mail";
+                                passwords.innerHTML = "Password"
+                            })
+                            //alert("Wrong username or Password, Please contact admin for help")
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                    });
+            }
+
+        });
+
+        function formValidation() {
+
+
+            if (document.loginAdmin.email.value == "") {
+                emails.innerHTML = "Please provide your Email!"
+                emails.style.color = "red";
+                document.loginAdmin.email.focus();
+                return false;
+            } else {
+                emails.innerHTML = ""
+            }
+            if (document.loginAdmin.email.value != "") {
+
+                var emailID = document.getElementById("adminEmail").value;
+                atpos = emailID.indexOf("@");
+                dotpos = emailID.lastIndexOf(".");
+
+                if (atpos < 1 || (dotpos - atpos < 2)) {
+                    emails.innerHTML = "Incorret Email (@,.) are missing";
+                    emails.style.color = "red";
+                    document.loginAdmin.email.focus();
+                    return false;
+
+                }
+
+            }
+
+
+            if (document.loginAdmin.password.value == "") {
+                passwords.innerHTML = "Please provide your password!";
+                passwords.style.color = "red";
+                document.loginAdmin.password.focus();
+                return false;
+            }
+
+
+            return (true);
+        }
+
+        function myFunction() {
+            var x = document.getElementById("toggle-password");
+
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+
+
+        }
+    </script>
+    <center>
+        <p class="label">&copy; Copright; M.Steven 2022 <a href="">Terms and Conditions here</a></p>
+    </center>
+    <script>
+        let humberg = document.getElementById("humberg")
+        let navBar = document.getElementById("mobileNav")
+        let mybodyhover = document.getElementById("mybodyhover")
+
+        function showNav() {
+            navBar.style.width = "45%";
+            mybodyhover.style.display = "block"
+        }
+
+        function closeNav() {
+            navBar.style.width = 0
+            mybodyhover.style.display = "none"
+        }
+    </script>
+</body>
+
+</html>

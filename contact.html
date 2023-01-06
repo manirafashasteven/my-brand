@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="M.Steven | Freelance Developer | Official Biography website">
+    <meta name="keywords" content="M.Steven, Biography, Awesome websites">
+    <meta name="author" content="Steven MANIRAFASHA">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.Steven - Contact us </title>
+    <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    
+    <section class="header navbar">
+        <div>
+            <table>
+                <tr>
+                    <td><img src="images/Rectangle 21.png" id="logo" width="50px" /></td>
+                    <td><label id="logo_text">M.Steven</label></td>
+                </tr>
+            </table>
+            <ul>
+                <li><a href="index.html">Home</a> </li>
+                <li><a href="blog.html">News</a> </li>
+                <li><a href="#" style="background-color: white;color: black;">Contacts</a> </li>
+                <li><a href="about.html">About</a> </li>
+                <li><a href="login.html" id="admin_login">login</a> </li>
+            </ul>
+            <a class="humberg" onclick="showNav()" id="humberg"><i class="fa fa-bars"></i></a>
+            <div class="mybodyhover" id="mybodyhover" onclick="closeNav()"></div>
+            <nav class="mobileNav" id="mobileNav">
+
+                <i style="font-size:24px" class="fa" id="closeNav"><span onclick="closeNav()">&#xf00d;</span></i>
+                <a href="#">Home</a>
+                <a href="#">News</a>
+                <a href="#">About</a>
+                <a href="#">Contacts</a>
+                <a href="#">Login</a>
+
+
+
+            </nav>
+        </div>
+    </section>
+    <center>
+        <div class="profileCard holla">
+            <img src="images/myphoto.jpg" />
+            <h3 style="color: white;">Steven MANIRAFASHA</h3>
+            <p style="color: rgba(58, 27, 236, 0.459);"> Web Specialist</p>
+        </div>
+
+        <div class="reachout holla">
+            <center>
+                <img src="images/Rectangle 21.png" id="logo" width="50px" />
+                <h2><span style="color: rgb(12, 67, 247);"> Reach  </span>out to <span style="color: rgb(12, 67, 247);"> @M.Steven </span>here </h2>
+                <form method="post" class="reach-out" name="rechout">
+                    <span class="errorMessage" id="errorName"></span>
+                    <input type="text" name="fullname" placeholder="Your name">
+
+                    <span class="errorMessage" id="errorEmail"></span>
+                    <input type="text" name="youremail" placeholder="Your e-mail" id="youremail">
+
+                    <br>
+                    <span class="errorMessage" id="errorMessage"></span>
+                    <textarea name="yourmessage" placeholder="Your message " cols="50" rows="5"></textarea>
+                    <input type="submit" value="Send message" />
+                </form>
+                <p class="label">For further help please visit our <a href="">FAQs</a></p>
+            </center>
+        </div>
+    </center>
+
+    <script>
+        const message = document.querySelector('.reach-out');
+       
+
+        
+
+        message.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            if (formValidation()) {
+                window.location.href="index.html"
+                    .then((docRef) => {
+
+                        window.location.href = "message_successfully.html"
+                        console.log("New Article Added Successfully with the ID", docRef.id)
+
+                    })
+                    .catch((error) => {
+                        console.error("Error adding document: ", error);
+                    });
+            }
+
+        });
+
+        function formValidation() {
+            let names = document.getElementById("errorName");
+            let emails = document.getElementById("errorEmail");
+            let messages = document.getElementById("errorMessage");
+            if (document.rechout.fullname.value == "") {
+                names.innerHTML = "Please provide your name!";
+                document.rechout.fullname.focus();
+                return false;
+            }
+            if (document.rechout.youremail.value == "") {
+                emails.innerHTML = "Please provide your Email!"
+                document.rechout.youremail.focus();
+                return false;
+            } else {
+                var emailID = document.getElementById("youremail").value;
+                atpos = emailID.indexOf("@");
+                dotpos = emailID.lastIndexOf(".");
+
+                if (atpos < 1 || (dotpos - atpos < 2)) {
+                    emails.innerHTML = "Incorret Email (@,.) are missing"
+                    document.rechout.youremail.focus();
+                    return false;
+
+                }
+
+            }
+            if (document.rechout.yourmessage.value == "") {
+                messages.innerHTML = "Please provide your Message or Queries! "
+                document.rechout.yourmessage.focus();
+                return false;
+            }
+            return (true);
+        }
+    </script>
+
+    <center>
+        <p class="label">&copy; Copright; M.Steven 2022 <a href="">Terms and Conditions here</a></p>
+    </center>
+    <script>
+        let humberg = document.getElementById("humberg")
+        let navBar = document.getElementById("mobileNav")
+        let mybodyhover = document.getElementById("mybodyhover")
+
+        function showNav() {
+            navBar.style.width = "45%";
+            mybodyhover.style.display = "block"
+        }
+
+        function closeNav() {
+            navBar.style.width = 0
+            mybodyhover.style.display = "none"
+        }
+    </script>
+</body>
+
+</html>
